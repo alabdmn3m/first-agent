@@ -563,6 +563,13 @@ body.hc.m-apply .assemble{margin-top:10px}
 .agentcard .pl small{font-size:.78rem;color:var(--faint)}
 .agentcard .pv{font-size:.92rem;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .agentcard .part4.built .pl b::after{content:" ✓";color:var(--ok)}
+
+/* final polish */
+.byline .dot{display:inline-block;width:4px;height:4px;border-radius:50%;background:var(--faint);vertical-align:middle}
+@media (max-width:760px){.byline .dot{display:none}}
+.excard{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--line);border-inline-start:3px solid var(--gold);background:var(--surface);border-radius:12px;padding:12px 14px;margin-top:-6px}
+.excard b{display:block;font-size:.95rem}.excard small{color:var(--muted);font-size:.9rem}
+.excard .pdot{flex:none;margin-top:7px}
 </style>
 
 <nav class="nav" aria-label="محطات الورشة"><div class="wrap">
@@ -575,18 +582,18 @@ body.hc.m-apply .assemble{margin-top:10px}
     <circle class="logo-g" cx="540.56" cy="687.37" r="15.43"/>
   </g></svg>
   <div class="modes" role="tablist" aria-label="طريقة العرض"><button type="button" role="tab" data-mode="apply" aria-selected="true">طبّق الآن</button><button type="button" role="tab" data-mode="learn" aria-selected="false">تعلّم أكثر</button></div>
-  <a href="#s-idea" class="on">1 · افهم</a>
-  <a href="#s-can">2 · الشروط</a>
-  <a href="#s-define">3 · صِف</a>
-  <a href="#s-apply">4 · ابنِ</a>
-  <a href="#s-check">5 · تحقّق</a>
-  <a href="#s-fix">6 · إذا تعثّرت</a>
+  <a href="#s-idea" class="on">1. افهم</a>
+  <a href="#s-can">2. الشروط</a>
+  <a href="#s-define">3. صِف</a>
+  <a href="#s-apply">4. ابنِ</a>
+  <a href="#s-check">5. تحقّق</a>
+  <a href="#s-fix">6. إذا تعثّرت</a>
 </div></nav>
 
 <main id="app" class="app wrap">
   <header class="app-h">
     <h1>ابنِ <span>وكيلك</span> الأول</h1>
-    <p class="byline"><span>إعداد عبدالرحمن العبدالمنعم</span><span class="dot">·</span><span>آخر مراجعة: أكتوبر 2026</span></p>
+    <p class="byline"><span>إعداد عبدالرحمن العبدالمنعم</span><span class="dot" aria-hidden="true"></span><span>آخر مراجعة: أكتوبر 2026</span></p>
     <p>أربع شاشات تبني فيها وكيلًا حقيقيًا في نحو نصف ساعة. كل ما تختاره يُحفظ في متصفحك.</p>
     <p class="sr" id="scrLive" aria-live="polite"></p>
     <ol class="stepper" id="stepper">
@@ -599,6 +606,7 @@ body.hc.m-apply .assemble{margin-top:10px}
   <section class="scr" data-i="0" aria-label="هل تحتاجه؟">
     <h2>هل مهمتك تستحق وكيلًا؟</h2>
     <p class="lead"><b>الوكيل</b> مهمة تعلّمها Claude مرة واحدة، فيؤديها بطريقتك في موعدها أو متى طلبته، دون أن تعيد شرحها له.</p>
+    <div class="excard" aria-label="مثال"><span class="pdot"></span><div><b>مثال: التقرير الأسبوعي</b><small>يصلك كل أحد الساعة 7:45 صباحًا جاهزًا، وفيه 3 قرارات تنتظرك.</small></div></div>
     <div data-slot="selftest"></div>
     <div class="need card"><b>ما تحتاجه قبل البدء</b>
       <ul>
@@ -637,9 +645,9 @@ body.hc.m-apply .assemble{margin-top:10px}
 <div class="station" id="s-idea" data-nav="s-idea">
 <header class="hero">
  <div class="hero-text">
-  <span class="eyebrow">دليل عملي · بلا برمجة</span>
+  <span class="eyebrow">دليل عملي، بلا برمجة</span>
   <h1>ابنِ <span>وكيلك</span> الأول</h1>
-  <p class="byline"><span>إعداد عبدالرحمن العبدالمنعم</span><span class="dot">·</span><span>آخر مراجعة: أكتوبر 2026</span></p>
+  <p class="byline"><span>إعداد عبدالرحمن العبدالمنعم</span><span class="dot" aria-hidden="true"></span><span>آخر مراجعة: أكتوبر 2026</span></p>
   <p class="define"><b>الوكيل</b> مهمة تعلّمها Claude مرة واحدة، فيؤديها بطريقتك في موعدها أو متى طلبته، دون أن تعيد شرحها له.</p>
   <div class="compare">
     <div class="before"><small>اليوم</small>تفتح Claude كل مرة، وتشرح له ما تريد من جديد، وتنتظر.</div>
@@ -650,9 +658,9 @@ body.hc.m-apply .assemble{margin-top:10px}
  <figure class="week card" aria-label="أمثلة لوكلاء يعملون وحدهم">
   <figcaption>أمثلة لوكلاء يعملون وحدهم</figcaption>
   <ol class="days"><li class="on">أحد<i></i></li><li>اثنين<i></i></li><li>ثلاثاء<i></i></li><li>أربعاء<i></i></li><li class="g">خميس<i></i></li><li>جمعة</li><li>سبت</li></ol>
-  <div class="ping"><span class="pdot"></span><div><b>ملخص البريد الصباحي</b><small>يوميًا · 7:30 صباحًا · 5 رسائل تحتاج ردك</small></div></div>
-  <div class="ping soft"><span class="pdot"></span><div><b>التقرير الأسبوعي</b><small>الأحد · 7:45 صباحًا · 3 قرارات تنتظرك</small></div></div>
-  <div class="ping soft"><span class="pdot g"></span><div><b>رصد الفرص</b><small>الخميس · 8:00 صباحًا · 7 فرص جديدة</small></div></div>
+  <div class="ping"><span class="pdot"></span><div><b>ملخص البريد الصباحي</b><small>يوميًا، 7:30 صباحًا، 5 رسائل تحتاج ردك</small></div></div>
+  <div class="ping soft"><span class="pdot"></span><div><b>التقرير الأسبوعي</b><small>الأحد، 7:45 صباحًا، 3 قرارات تنتظرك</small></div></div>
+  <div class="ping soft"><span class="pdot g"></span><div><b>رصد الفرص</b><small>الخميس، 8:00 صباحًا، 7 فرص جديدة</small></div></div>
  </figure>
 </header>
 
@@ -674,7 +682,7 @@ body.hc.m-apply .assemble{margin-top:10px}
     <div class="st-q"><span>هل تستطيع شرح طريقتها لموظف جديد في سطرين؟</span><span class="yn"><button type="button" data-v="1">نعم</button><button type="button" data-v="0">لا</button></span></div>
     <p class="st-r" id="stRes" aria-live="polite">أجب عن الأسئلة الثلاثة لتعرف النتيجة.</p>
   </div>
-  <p class="callout"><b>بصراحة:</b> الوكيل قد يخطئ أو يلتقط معلومة ناقصة، ولذلك تراجع أول ثلاث مرات تشغيل بعناية. والقواعد التي تكتبها له تمنعه من إرسال أي شيء دون موافقتك.</p>
+  <p class="callout"><b>بصراحة:</b> الوكيل قد يخطئ أو يلتقط معلومة ناقصة، ولذلك تراجع أول ثلاث مرات تشغيل بعناية. والقواعد التي تكتبها له تعليمات يلتزم بها، وليست قفلًا تقنيًا؛ فالأسلم أن يكون ناتجه ملفًا أو مسودات لا تُرسَل لأحد.</p>
 </section>
 
 <section id="idea" aria-labelledby="h-idea">
@@ -695,15 +703,15 @@ body.hc.m-apply .assemble{margin-top:10px}
         <text class="core-t" x="200" y="176" text-anchor="middle">Claude</text>
         <g class="node on" data-n="skill" tabindex="0" role="button" aria-label="المهارة"><circle cx="200" cy="34" r="34"/><text x="200" y="39" text-anchor="middle">المهارة</text></g>
         <g class="node" data-n="conn" tabindex="0" role="button" aria-label="الموصلات"><circle cx="36" cy="170" r="34"/><text x="36" y="175" text-anchor="middle">الموصلات</text></g>
-        <g class="node" data-n="sched" tabindex="0" role="button" aria-label="المهمة المجدولة"><circle cx="364" cy="170" r="34"/><text x="364" y="166" text-anchor="middle">المهمة</text><text x="364" y="186" text-anchor="middle">المجدولة</text></g>
+        <g class="node" data-n="sched" tabindex="0" role="button" aria-label="الجدولة"><circle cx="364" cy="170" r="34"/><text x="364" y="175" text-anchor="middle">الجدولة</text></g>
         <g class="node" data-n="out" tabindex="0" role="button" aria-label="الناتج"><circle cx="200" cy="306" r="34"/><text x="200" y="311" text-anchor="middle">الناتج</text></g>
       </svg>
     </div>
     <div class="terms" role="group" aria-label="المصطلحات">
       <button class="term" data-n="skill" aria-pressed="true"><b>المهارة</b><span>ورقة تعليمات تحفظ طريقتك في أداء المهمة، فلا تعيد شرحها كل مرة.</span><em id="tSkill"></em></button>
       <button class="term" data-n="conn" aria-pressed="false"><b>الموصلات</b><span>إذن يمنح Claude الوصول إلى أدواتك. لا تفعّل إلا ما يحتاجه، وتستطيع فصله متى شئت.</span><em id="tConn"></em></button>
-      <button class="term" data-n="sched" aria-pressed="false"><b>المهمة المجدولة</b><span>منبّه يشغّل الوكيل وحده في موعده، بالمهارة والموصلات نفسها.</span><em id="tSched"></em></button>
-      <button class="term" data-n="out" aria-pressed="false"><b>الناتج</b><span>ما يصلك في كل مرة. لا يرسل شيئًا لأحد دون موافقتك.</span><em id="tOut"></em></button>
+      <button class="term" data-n="sched" aria-pressed="false"><b>الجدولة</b><span>منبّه يشغّل الوكيل وحده في موعده، بالمهارة والموصلات نفسها.</span><em id="tSched"></em></button>
+      <button class="term" data-n="out" aria-pressed="false"><b>الناتج</b><span>ما يصلك في كل مرة. الأسلم أن يكون ملفًا أو مسودات لا تُرسَل لأحد.</span><em id="tOut"></em></button>
     </div>
   </div>
 </section>
@@ -731,7 +739,7 @@ body.hc.m-apply .assemble{margin-top:10px}
     
     <li><span class="ico"><svg viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><circle cx="12" cy="12" r="4"/></svg></span><div><b>خيار إنشاء الملفات مفعّلًا</b><p>المهارات تحتاج <span dir="ltr">Code execution and file creation</span> من <span dir="ltr">Settings → Capabilities</span>. به ينشئ Claude الملفات في بيئة معزولة خاصة به، ولا يغيّر شيئًا في حاسبك. في Team وEnterprise يفعّله مالك الحساب من <span dir="ltr">Organization settings → Capabilities</span>.</p></div></li>
   </ul>
-  <p class="callout"><b>تنبيه:</b> المهام المجدولة الجديدة في Pro وMax تعمل على خوادم Anthropic، فتعمل في موعدها ولو كان حاسبك مغلقًا. الاستثناء: إن احتاجت ملفات أو تطبيقات على حاسبك، فلا تعمل إلا وتطبيق Claude Desktop مفتوح. وتصل التجربة الموحدة (دمج المحادثة وCowork) إلى الحسابات تدريجيًا. وخصّص نحو نصف ساعة للبناء والتجربة الأولى.</p>
+  <p class="callout"><b>تنبيه:</b> المهام المجدولة الجديدة في Pro وMax تعمل على خوادم Anthropic، فتنطلق في موعدها ولو كان حاسبك مغلقًا. الاستثناء: إن احتاجت ملفات أو تطبيقات على حاسبك، فلا تعمل إلا وتطبيق Claude Desktop مفتوح. وتصل التجربة الموحدة (دمج المحادثة وCowork) إلى الحسابات تدريجيًا. وخصّص نحو نصف ساعة للبناء والتجربة الأولى.</p>
 </section>
 </div>
 
@@ -739,7 +747,7 @@ body.hc.m-apply .assemble{margin-top:10px}
 <div class="station" id="s-define" data-nav="s-define">
 <section id="define" aria-labelledby="h-def">
   <div class="sechead">
-    <span class="eyebrow">صف وكيلك · دقيقتان</span>
+    <span class="eyebrow">صف وكيلك (دقيقتان)</span>
     <h2 id="h-def">ماذا تريد أن يفعل وكيلك؟</h2>
     <p class="lead">اختر نموذجًا قريبًا مما تريد ثم عدّله، أو اختر «وكيل خاص» وصفه بكلماتك. كل اختياراتك تُحفظ في متصفحك.</p>
   </div>
@@ -848,7 +856,7 @@ body.hc.m-apply .assemble{margin-top:10px}
         <button class="btn" id="prev">السابق</button>
         <button class="btn" id="next">التالي</button>
       </div>
-      <p class="note" style="margin-top:8px">رسم توضيحي مبسّط، محدّث حتى أكتوبر 2026. الأزرار بالإنجليزية كما تظهر غالبًا، وقد يختلف مكانها أو اسمها قليلًا، خاصة في التجربة الموحدة الجديدة.</p>
+      <p class="note" style="margin-top:8px">رسم توضيحي مبسّط، محدّث حتى أكتوبر 2026. الأزرار بالإنجليزية كما تظهر في Claude، وقد يختلف مكانها أو اسمها قليلًا، خاصة في التجربة الموحدة الجديدة.</p>
     </div>
     <ol class="steps" id="steps"></ol>
   </div>
@@ -863,8 +871,8 @@ body.hc.m-apply .assemble{margin-top:10px}
   <div class="msgs card">
     <div class="top">
       <div class="seg" role="group" aria-label="الرسالة" id="segMsg">
-        <button data-msg="1" aria-pressed="true">1 · إنشاء المهارة</button>
-        <button data-msg="2" aria-pressed="false">2 · المهمة المجدولة</button>
+        <button data-msg="1" aria-pressed="true">1. إنشاء المهارة</button>
+        <button data-msg="2" aria-pressed="false">2. الجدولة</button>
       </div>
       <button class="btn primary" id="copy">نسخ</button>
     </div>
@@ -922,7 +930,7 @@ body.hc.m-apply .assemble{margin-top:10px}
   <div class="src">
     <span>المصادر الرسمية:</span>
     <a href="https://support.claude.com/en/articles/13854387" target="_blank" rel="noopener">جدولة المهام المتكررة</a>
-    <a href="https://support.claude.com/en/articles/12599426" target="_blank" rel="noopener">إنشاء مهارة بالمحادثة</a>
+    <a href="https://academy.claude.com/tutorials/how-to-create-a-skill-with-claude-through-conversation" target="_blank" rel="noopener">إنشاء مهارة بالمحادثة</a>
     <a href="https://support.claude.com/en/articles/12512180" target="_blank" rel="noopener">استخدام المهارات</a>
     <a href="https://support.claude.com/en/articles/11176164" target="_blank" rel="noopener">الموصلات</a>
     <a href="https://support.claude.com/en/articles/15520349" target="_blank" rel="noopener">Cowork على الويب والحاسب والجوال</a>
@@ -963,7 +971,7 @@ body.hc.m-apply .assemble{margin-top:10px}
     <path class="logo-p" d="M731.46,760.45h6.78c-1.95-1.15-3.46-3.63-3.46-6.6,0-5.49,3.77-10.19,11.61-10.19,2.97,0,5.49.84,5.49.84l-1.02,4.65s-2.04-.93-4.61-.93c-3.32,0-5.58,2.21-5.58,5.63,0,3.77,3.06,6.6,10.05,6.6h3.46v4.61h-22.72v-4.61Z"/>
   </svg>
   <div class="foot-t">
-    <p class="foot-n">ابنِ وكيلك الأول · إعداد عبدالرحمن العبدالمنعم</p>
+    <p class="foot-n">ابنِ وكيلك الأول، إعداد عبدالرحمن العبدالمنعم</p>
     <p>آخر مراجعة: أكتوبر 2026. خطوات Claude تتغير، فإن وجدت اختلافًا فاتبع الأحدث في التطبيق.</p>
     <p>صفحة شخصية مستقلة، غير تابعة لشركة Anthropic ولا معتمدة منها. Claude علامة تجارية لشركة Anthropic.</p>
     <p class="foot-l"><a class="li" href="https://www.linkedin.com/in/alabdmn3m" target="_blank" rel="noopener me" aria-label="حساب عبدالرحمن العبدالمنعم في LinkedIn (يفتح في نافذة جديدة)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c.8-3.6 3.6-5.5 7-5.5s6.2 1.9 7 5.5"/></svg><span>تواصل معي في <span dir="ltr">LinkedIn</span></span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 5h5v5M19 5l-8 8M10 6H6a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4"/></svg></a></p>
@@ -1062,9 +1070,9 @@ function renderCard(){
   $('#cOut').textContent=OUT[S.out].card;{const k=$('#cSkill');if(k)k.textContent=(S.task||'').trim()||'لم تصف المهمة بعد';}
   $('#cRules').textContent=rulesFull();
   const cn=S.src.filter(k=>k!=='web').map(k=>SRC[k].n);($('#preSrc')||{}).textContent=cn.length?`ستربط: ${joinAr(cn)}. اربطها فقط، لا كل الموصلات. في Team وEnterprise يجب أن يتيحها مالك الحساب أولًا.`+(S.src.includes('web')?' والبحث في الويب لا يحتاج موصلًا.':''):S.src.includes('web')?'وكيلك يستخدم البحث في الويب فقط، ولا يحتاج موصلًا.':'اختر مصادر وكيلك في السؤال الثالث، وستظهر هنا.';
-  $('#tSkill').textContent=`في وكيلك: «${S.name}» · Customize → Skills`;
-  $('#tConn').textContent=S.src.length?`في وكيلك: ${joinAr(srcNames())} · Customize → Connectors`:'في وكيلك: لم تختر مصدرًا بعد';
-  $('#tSched').textContent=S.when==='demand'?'في وكيلك: لا يحتاجها، تستدعيه بالاسم':`في وكيلك: ${whenText()} · Scheduled`;
+  $('#tSkill').textContent=`في وكيلك: «${S.name}»، من Customize → Skills`;
+  $('#tConn').textContent=S.src.length?`في وكيلك: ${joinAr(srcNames())}، من Customize → Connectors`:'في وكيلك: لم تختر مصدرًا بعد';
+  $('#tSched').textContent=S.when==='demand'?'في وكيلك: لا يحتاجها، تستدعيه بالاسم':`في وكيلك: ${whenText()}، من Scheduled`;
   $('#tOut').textContent=`في وكيلك: ${OUT[S.out].card}`;
   $('#h-walk').textContent=`بناء «${S.name||'وكيلك'}» خطوة بخطوة`;renderFast();
   const cn2=S.src.filter(k=>k!=='web').map(k=>SRC[k].n);$('#c1t').textContent=cn2.length?`ربطت موصلات وكيلي فقط: ${joinAr(cn2)}، وتأكّدت أنها مفعّلة داخل المهمة من زر +.`:'وكيلي لا يحتاج موصلًا، وتأكّدت أن البحث في الويب متاح.';
@@ -1084,7 +1092,7 @@ function texts(){
   return{'1':one,'2':two};
 }
 const plain=k=>texts()[k].replace(/[\u0001\u0002]/g,'');
-const notes={'1':'ابدأ محادثة جديدة (أو مهمة جديدة في Cowork إن ظهر لك خياره)، والصقها، ثم أرسلها. سيسألك، ثم يجهّز ملف المهارة، فاحفظه.','2':'بعد تجربة المهارة مرتين: من Scheduled اضغط New task ثم Set up manually، واكتب الاسم، والصق هذا النص في Prompt، واختر الموافقة التلقائية والتكرار، ثم Save.'};
+const notes={'1':'ابدأ محادثة جديدة (أو مهمة جديدة في Cowork إن ظهر لك خياره)، والصقها، ثم أرسلها. سيسألك، ثم يجهّز المهارة، فاضغط Save skill لحفظها.','2':'بعد تجربة المهارة مرتين: من Scheduled اضغط New task ثم Set up manually، واكتب الاسم، والصق هذا النص في Prompt، واختر الموافقة التلقائية والتكرار، ثم Save.'};
 function renderMsg(){$('#out').innerHTML=esc(texts()[msg]).replace(/\u0001/g,'<mark>').replace(/\u0002/g,'</mark>');$('#msgNote').textContent=S.when==='demand'&&msg==='2'?'لا خطوة إضافية هنا.':msg==='2'?`بعد تجربة المهارة مرتين: من Scheduled اضغط New task ثم Set up manually. الاسم: «${S.name||'وكيلي'}»، والتكرار: ${whenText()}، ووضع الموافقة: Automatically approve. الصق هذا النص في خانة Prompt، ثم Save.`:notes[msg]}
 $$('#segMsg button').forEach(b=>b.onclick=()=>{$$('#segMsg button').forEach(x=>x.setAttribute('aria-pressed','false'));b.setAttribute('aria-pressed','true');msg=b.dataset.msg;renderMsg()});
 $('#copy').onclick=function(){const b=this,old='نسخ';const sel=()=>{const r=document.createRange();r.selectNodeContents($('#out'));const s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='انسخ المحدد يدويًا'};try{navigator.clipboard.writeText(plain(msg)).then(()=>{b.textContent='تم النسخ ✓';setTimeout(()=>b.textContent=old,1800)},sel)}catch(e){sel()}};
@@ -1138,7 +1146,7 @@ function buildScenes(){
    {side:'new',t:'أجب عن أسئلة Claude',c:'سيسألك عن الناقص. كلما كانت إجاباتك أدق كانت المهارة أثبت.',w:'',
     h:`<div class="bubble me rtl">أريد إنشاء مهارة اسمها «${name}»...</div><div class="bubble rtl">${esc(q[0])}<div class="chips">${q[1].map((o,j)=>`<span class="chip${j===1?' pick':''}"${j===1?' id="tgt"':''}>${esc(o)}</span>`).join('')}</div></div>`},
    {side:'customize',t:'احفظ المهارة وتأكّد من تفعيلها',c:'دون الحفظ تبقى المهارة داخل المحادثة وحدها، ولا تستطيع المهمة المجدولة استدعاءها. حين ينتهي Claude يظهر ملف المهارة في آخر المحادثة ومعه زر لحفظها في مهاراتك (قد يظهر باسم Copy to your skills). اضغطه، ثم تأكّد أن مفتاح المهارة مفعّل.',w:ltr('Customize → Skills'),
-    h:`<div class="filecard"><span class="ic"></span><div style="flex:1" class="rtl"><b>${name}</b><div class="note">SKILL.md · جاهزة</div></div><span class="ui-btn" id="tgt">Copy to your skills</span></div><div class="ui-row rtl"><span>${name}</span><span class="tog on"></span></div>`},
+    h:`<div class="filecard"><span class="ic"></span><div style="flex:1" class="rtl"><b>${name}</b><div class="note">SKILL.md، جاهزة</div></div><span class="ui-btn" id="tgt">Copy to your skills</span></div><div class="ui-row rtl"><span>${name}</span><span class="tog on"></span></div>`},
    {side:'new',t:'جرّبه يدويًا',c:'في مهمة جديدة اطلبه باسمه، وراجع الناتج مقابل المصادر. فإن لم يعجبك شيء فقل: «حدّث المهارة بحيث...».',w:ltr('+ New'),h:`<div class="bubble me rtl">شغّل مهارة «${name}»</div>${outPreview}`}
   ];
   if(S.when==='demand'){
@@ -1147,7 +1155,7 @@ function buildScenes(){
     sc.push({side:'scheduled',copy:'2',t:'أنشئ المهمة المجدولة',c:'الأسرع: اطلب الجدولة بالكلام كما في المسار السريع. أو يدويًا: من Scheduled (المهام المجدولة) اضغط New task ثم Set up manually (الإعداد اليدوي). اكتب الاسم، والصق «الرسالة 2» في Prompt (الطلب)، واختر في Approval mode (وضع الموافقة) الموافقة التلقائية Automatically approve ليعمل وأنت غائب، ثم التكرار، ثم Save.',w:ltr('Scheduled → New task'),
      h:`<div class="field"><label>Task name</label><div class="v rtl">${name}</div></div><div class="field"><label>Prompt</label><div class="v rtl">استخدم مهارة «${name}»...</div></div><div class="field"><label>Approval mode</label><div class="v">Automatically approve</div></div><div class="field"><label>Frequency</label><div class="v">${FREQ} · ${S.time}</div></div><div style="display:flex"><span class="ui-btn" id="tgt">Save</span></div>`});
     sc.push({side:'scheduled',t:'راقب أول مرات التشغيل',c:'من صفحة Scheduled تعدّل المهمة، أو توقفها مؤقتًا، أو تشغّلها فورًا للتجربة. راجع أول ثلاث مرات تشغيل بعناية.',w:ltr('Scheduled'),
-     h:`<div class="ui-row"><span class="rtl">${name} · ${esc(whenText())}</span><span class="ui-btn ghost" id="tgt">Pause</span></div><div class="ui-row"><span>Run 2</span><span class="ok">✓ done</span></div><div class="ui-row"><span>Run 1</span><span class="ok">✓ done</span></div>`});
+     h:`<div class="ui-row"><span class="rtl">${name}، ${esc(whenText())}</span><span class="ui-btn ghost" id="tgt">Pause</span></div><div class="ui-row"><span>Run 2</span><span class="ok">✓ done</span></div><div class="ui-row"><span>Run 1</span><span class="ok">✓ done</span></div>`});
   }
   return sc;
 }
@@ -1189,7 +1197,7 @@ syncForm();renderAll();
 
 /* ---------- quiz ---------- */
 const Q=[
- {q:'تريد أن يعمل الوكيل كل أسبوع دون أن تطلب منه. ما الذي يحقق ذلك؟',o:['المهارة','الموصلات','المهمة المجدولة'],a:2,e:'المهارة تحفظ طريقة العمل، والموصلات تعطي الوصول، أما التشغيل التلقائي في موعد ثابت فهو دور المهمة المجدولة.'},
+ {q:'تريد أن يعمل الوكيل كل أسبوع دون أن تطلب منه. ما الذي يحقق ذلك؟',o:['المهارة','الموصلات','الجدولة'],a:2,e:'المهارة تحفظ طريقة العمل، والموصلات تعطي الوصول، أما التشغيل التلقائي في موعد ثابت فهو دور الجدولة.'},
  {q:'شغّلت الوكيل فقال: «لا أستطيع الوصول إلى المصدر». أين الخلل غالبًا؟',o:['الموصلات: المصدر غير مربوط أو اسمه غير دقيق','المهمة المجدولة: الموعد خاطئ','Claude لا يفهم العربية'],a:0,e:'إذا لم يصل الوكيل إلى المصدر فالمشكلة في الربط أو في وصف مكان المعلومات. تحقّق من الموصل والاسم في المهارة.'}
 ];
 let qi=0,score=0;const qb=$('#quizBox');
