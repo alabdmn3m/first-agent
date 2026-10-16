@@ -576,6 +576,10 @@ body.hc.m-apply .assemble{margin-top:10px}
 #app .st-intro b{display:inline-block;font-size:.82rem;color:var(--brand);background:var(--brand-soft);border-radius:20px;padding:2px 10px;margin-bottom:6px}
 #app .st-intro p{margin:0;color:var(--ink);font-size:1rem;line-height:1.7}
 #app .excard{margin-top:0}
+
+.srcnote{margin:8px 0 0;font-size:.86rem;color:var(--muted);border-inline-start:3px solid var(--gold);padding-inline-start:8px}
+.srcnote[hidden]{display:none}
+.srcnote .linkbtn{color:var(--brand);font-weight:700;text-decoration:underline}
 </style>
 
 <nav class="nav" aria-label="محطات الورشة"><div class="wrap">
@@ -763,7 +767,7 @@ body.hc.m-apply .assemble{margin-top:10px}
       <div class="qrow">
         <h3><span class="num">1</span>ما المهمة؟</h3>
         <div class="tpls" id="tpls" role="group" aria-label="نماذج الوكلاء"></div>
-        <div class="f"><label for="f-task">وصف المهمة بكلماتك</label><textarea id="f-task"></textarea><small>اكتبها كما تشرحها لموظف جديد في سطرين. هذا أهم سطر في وكيلك.</small></div>
+        <div class="f"><label for="f-task">وصف المهمة بكلماتك</label><textarea id="f-task"></textarea><small>اكتبها كما تشرحها لموظف جديد في سطرين. هذا أهم سطر في وكيلك.</small><p class="srcnote" id="taskNote" hidden>عدّل ما بين القوسين [ ] بموضوعك قبل أن تنتقل.</p></div>
       </div>
       <div class="qrow">
         <h3><span class="num">2</span>متى يعمل؟</h3>
@@ -782,12 +786,14 @@ body.hc.m-apply .assemble{margin-top:10px}
       <div class="qrow">
         <h3><span class="num">3</span>من أين يأخذ المعلومات؟</h3>
         <div class="chipset" id="srcs" role="group" aria-label="المصادر"></div>
+        <p class="srcnote" id="msNote" hidden>موصل Microsoft 365 متاح لحسابات Team وEnterprise فقط، بعد أن يفعّله مسؤول حسابكم. وهو للقراءة فقط: يقرأ بريدك وملفاتك، ولا يحفظ فيها شيئًا.</p>
         <div class="f" id="folderWrap"><label for="f-folder">اسم المجلد في Drive</label><input id="f-folder"><small>اكتبه حرفًا بحرف كما يظهر في Drive.</small></div>
         <p class="hint2">اختر واحدًا على الأقل. كل مصدر هنا يحتاج تفعيل موصله مرة واحدة، وقد تختلف الموصلات المتاحة بحسب حسابك.</p>
       </div>
       <div class="qrow">
         <h3><span class="num">4</span>ماذا يُخرج لك؟</h3>
         <div class="chipset" id="outs" role="group" aria-label="الناتج"></div>
+        <p class="srcnote" id="outNote" hidden>دون Google Drive يصلك الملف داخل المهمة لتنزّله. لحفظه في Drive تلقائيًا <button type="button" class="linkbtn" id="addDrive">أضف Google Drive</button>.</p>
         <details class="more">
           <summary>+ الاسم والخطوط الحمراء (اختياري)</summary>
           <div class="inner">
@@ -1007,24 +1013,25 @@ const SRC={
  gmail:{n:'Gmail',txt:'بريدي في Gmail'},
  drive:{n:'Google Drive',txt:'مجلد «{folder}» في Google Drive'},
  cal:{n:'Google Calendar',txt:'تقويمي في Google Calendar'},
+ ms:{n:'Microsoft 365',cn:'Microsoft 365 (بعد أن يفعّله مسؤول حسابكم)',txt:'Microsoft 365: مجلد «{folder}» في OneDrive أو SharePoint، وبريدي في Outlook، وTeams عند الحاجة'},
  slack:{n:'Slack',txt:'قنوات Slack التي أحددها'},
- tasks:{n:'أداة المهام',txt:'مهام الفريق في أداة المهام التي نستخدمها (ClickUp أو Asana أو Notion)'},
+ tasks:{n:'أداة المهام',cn:'أداة مهامك (ابحث عن اسمها: Asana أو Notion أو monday.com)',txt:'مهام الفريق في أداة المهام التي نستخدمها (Asana أو Notion أو monday.com)'},
  web:{n:'البحث في الويب',txt:'البحث في الويب، مع تقديم المصادر الرسمية'}
 };
 const OUT={
  chat:{n:'ملخص يصلك',txt:'ملخص مختصر يصلني هنا في المحادثة',card:'ملخص في المحادثة'},
- word:{n:'ملف Word',txt:'ملف Word يُحفظ في Google Drive',card:'ملف Word في Drive'},
+ word:{n:'ملف Word',get txt(){return S.src.includes('drive')?'ملف Word يُحفظ في Google Drive':'ملف Word يصلني داخل المهمة لأنزّله'},get card(){return S.src.includes('drive')?'ملف Word في Drive':'ملف Word تنزّله من المهمة'}},
  table:{n:'جدول مرتّب',txt:'جدول مرتّب بالأعمدة المناسبة',card:'جدول مرتّب'},
- drafts:{n:'مسودات لا تُرسل',txt:'مسودات جاهزة لا تُرسل إلا بموافقتي',card:'مسودات بانتظار موافقتك'}
+ drafts:{n:'مسودات لا تُرسل',get txt(){return S.src.includes('gmail')?'مسودات في Gmail لا تُرسل إلا بموافقتي':'مسودات نصية تصلني في المحادثة، ولا تُرسل لأحد'},get card(){return S.src.includes('gmail')?'مسودات في Gmail بانتظار موافقتك':'مسودات في المحادثة'}}
 };
 const T={
  inbox:{ic:'mail',n:'ملخص البريد الصباحي',s:'يفرز بريدك ويخبرك بما يحتاج ردك',task:'قراءة رسائل البريد الواردة منذ آخر تشغيل، وفرزها إلى: يحتاج ردًا مني، وللعلم، ويمكن تجاهله، مع سطر يلخص كل رسالة مهمة.',when:'daily',day:'أحد',time:'07:30',src:['gmail'],out:'chat',folder:'',rules:'لا ترسل أي رد. لا تحذف أي رسالة ولا تؤرشفها.',log:['قرأ 38 رسالة جديدة في Gmail.','فرزها: 5 تحتاج ردك، و12 للعلم، و21 يمكن تجاهلها.','كتب سطرًا يلخص كل رسالة مهمة.'],q:['ما الذي يجعل الرسالة «تحتاج ردك»؟',['من مديري أو مجلس الإدارة','فيها موعد أو طلب','الاثنان معًا']]},
  report:{ic:'doc',n:'التقرير الأسبوعي',s:'يجمع مستجدات الأسبوع في تقرير',task:'إعداد تقرير أسبوعي عن سير العمل: الإنجازات، وما تأخر وسببه، والمخاطر، والقرارات المطلوبة مني.',when:'weekly',day:'أحد',time:'07:45',src:['drive'],out:'word',folder:'التقارير',rules:'لا تخترع أرقامًا. إذا نقصت معلومة فاكتب «غير متوفر».',log:['قرأ 6 ملفات جديدة من مجلد «التقارير».','استخرج الإنجازات والمتأخر والمخاطر والقرارات المطلوبة.','كتب التقرير وحفظه في Drive.'],q:['ما الأقسام التي يحتويها التقرير؟',['ملخص فقط','إنجازات وتأخر وقرارات','تفصيلي حسب المشروع']]},
- watch:{ic:'radar',n:'رصد الفرص والأخبار',s:'يتابع موضوعًا ويلخص الجديد',task:'رصد ما استجد خلال الفترة في موضوع أحدده (منح، أو أخبار القطاع، أو منافسون)، وتلخيص ما يستحق المتابعة مع رابط كل معلومة.',when:'weekly',day:'خميس',time:'08:00',src:['web'],out:'table',folder:'',rules:'ضع رابط المصدر لكل معلومة. ميّز المؤكد من المنقول. تجاهل ما انتهى موعده.',log:['راجع 31 نتيجة من مصادر رسمية وإخبارية.','استبعد 24: قديمة، أو مكررة، أو بلا مصدر موثوق.','كتب جدولًا بـ 7 عناصر مع روابطها.'],q:['ما الموضوع الذي ترصده؟',['منح وتمويل','أخبار القطاع','منافسون']]},
+ watch:{ic:'radar',n:'رصد الفرص والأخبار',s:'يتابع موضوعًا ويلخص الجديد',task:'رصد ما استجد خلال الفترة في [اكتب موضوعك هنا، مثل: منح التعليم في السعودية]، وتلخيص ما يستحق المتابعة مع رابط كل معلومة.',when:'weekly',day:'خميس',time:'08:00',src:['web'],out:'table',folder:'',rules:'ضع رابط المصدر لكل معلومة. ميّز المؤكد من المنقول. تجاهل ما انتهى موعده.',log:['راجع 31 نتيجة من مصادر رسمية وإخبارية.','استبعد 24: قديمة، أو مكررة، أو بلا مصدر موثوق.','كتب جدولًا بـ 7 عناصر مع روابطها.'],q:['ما الموضوع الذي ترصده؟',['منح وتمويل','أخبار القطاع','منافسون']]},
  meet:{ic:'cal',n:'تحضير الاجتماعات',s:'يجهّزك لاجتماعات يومك',task:'لكل اجتماع في تقويم اليوم: من الحضور، وآخر المراسلات معهم، والملفات ذات الصلة، و3 أسئلة مقترحة.',when:'daily',day:'أحد',time:'07:00',src:['cal','gmail','drive'],out:'chat',folder:'الاجتماعات',rules:'لا تقبل أي دعوة ولا ترفضها. لا تراسل الحضور.',log:['وجد 4 اجتماعات في تقويم اليوم.','جمع آخر المراسلات والملفات لكل اجتماع.','جهّز ورقة تحضير لكل اجتماع مع 3 أسئلة.'],q:['ماذا تريد لكل اجتماع؟',['الحضور فقط','الحضور والمراسلات','كل شيء مع أسئلة']]},
  tasks:{ic:'check',n:'متابعة المهام المتأخرة',s:'يرصد المتأخر ويقترح تذكيرات',task:'مراجعة مهام الفريق، وحصر المتأخر منها حسب المسؤول، وكتابة مسودة تذكير مهذبة لكل مسؤول.',when:'weekly',day:'اثنين',time:'08:00',src:['tasks'],out:'drafts',folder:'',rules:'لا ترسل التذكيرات. لا تغيّر حالة أي مهمة.',log:['راجع 52 مهمة مفتوحة.','وجد 9 مهام متأخرة لدى 4 أشخاص.','كتب 4 مسودات تذكير بانتظار موافقتك.'],q:['متى تُعدّ المهمة متأخرة؟',['تجاوزت موعدها','تجاوزته بيومين','تجاوزته بأسبوع']]},
  docs:{ic:'folder',n:'ملخص الملفات الجديدة',s:'يلخص ما أُضيف إلى مجلد',task:'رصد الملفات المضافة أو المعدّلة في المجلد منذ آخر تشغيل، وتلخيص كل ملف في 3 أسطر مع ما يحتاج انتباهي.',when:'daily',day:'أحد',time:'08:00',src:['drive'],out:'chat',folder:'المشترك',rules:'لا تعدّل أي ملف ولا تنقله.',log:['وجد 5 ملفات جديدة في المجلد.','لخّص كل ملف في 3 أسطر.','أبرز ملفين يحتاجان انتباهك.'],q:['كم سطرًا لكل ملف؟',['سطر واحد','3 أسطر','نصف صفحة']]},
- content:{ic:'pen',n:'أفكار ومسودات محتوى',s:'يقترح منشورات من أخبار مجالك',task:'جمع أبرز ما نُشر في مجالي خلال الفترة، واقتراح 3 أفكار منشورات مع مسودة قصيرة لكل منها.',when:'weekly',day:'أحد',time:'09:00',src:['web'],out:'drafts',folder:'',rules:'لا تنشر شيئًا. اذكر مصدر كل فكرة.',log:['راجع 20 خبرًا ومقالًا في مجالك.','اختار 3 موضوعات تناسب جمهورك.','كتب 3 مسودات منشورات بانتظار موافقتك.'],q:['ما نبرة المنشورات؟',['رسمية','ودية','تعليمية']]},
+ content:{ic:'pen',n:'أفكار ومسودات محتوى',s:'يقترح منشورات من أخبار مجالك',task:'جمع أبرز ما نُشر في [اكتب مجالك وجمهورك هنا] خلال الفترة، واقتراح 3 أفكار منشورات مع مسودة قصيرة لكل منها.',when:'weekly',day:'أحد',time:'09:00',src:['web'],out:'drafts',folder:'',rules:'لا تنشر شيئًا. اذكر مصدر كل فكرة.',log:['راجع 20 خبرًا ومقالًا في مجالك.','اختار 3 موضوعات تناسب جمهورك.','كتب 3 مسودات منشورات بانتظار موافقتك.'],q:['ما نبرة المنشورات؟',['رسمية','ودية','تعليمية']]},
  kpi:{ic:'chart',n:'تقرير الأرقام الأسبوعي',s:'يقارن أرقام الأسبوع بما قبله',task:'قراءة جدول المؤشرات، ومقارنة أرقام الأسبوع بالأسبوع السابق، وإبراز ما تحسّن وما تراجع وسببه المحتمل.',when:'weekly',day:'أحد',time:'08:00',src:['drive'],out:'word',folder:'المؤشرات',rules:'لا تخترع أرقامًا. افصل بين الحقيقة والاستنتاج.',log:['قرأ جدول المؤشرات من Drive.','قارن 12 مؤشرًا بالأسبوع السابق.','كتب تقريرًا: 7 تحسّنت، و3 تراجعت، و2 بلا تغيير.'],q:['ما الذي يهمك أكثر؟',['ما تراجع','ما تحسّن','الاثنان']]},
  custom:{ic:'plus',n:'وكيل خاص',s:'صف ما تريده بكلماتك',task:'',when:'weekly',day:'أحد',time:'08:00',src:[],out:'chat',folder:'اسم مجلدك',rules:'لا ترسل شيئًا لأحد دون موافقتي.',log:null,q:['ما أهم شيء في الناتج؟',['الإيجاز','الدقة','التوصيات']]}
 };
@@ -1043,11 +1050,13 @@ const whenText=()=>S.when==='daily'?`يوميًا الساعة ${tLabel(S.time)}
 const period=()=>({daily:'آخر 24 ساعة',weekly:'الأسبوع الماضي',weekdays:'آخر يوم عمل',demand:'الفترة التي أحددها عند الطلب'})[S.when];
 const srcNames=()=>S.src.map(k=>SRC[k].n);
 const srcTexts=()=>S.src.map(k=>SRC[k].txt.replace('{folder}',S.folder||'اسم مجلدك'));
+const cName=k=>SRC[k].cn||SRC[k].n;
 const joinAr=a=>a.length<2?(a[0]||''):a.slice(0,-1).join('، ')+' و'+a[a.length-1];
 
 /* ---------- designer UI ---------- */
 const tplsEl=$('#tpls');
 Object.entries(T).forEach(([id,t])=>{const b=document.createElement('button');b.className='tpl';b.dataset.id=id;b.innerHTML=`<svg viewBox="0 0 24 24">${IC[t.ic]}</svg><div><b>${t.n}</b><span>${t.s}</span></div>`;b.onclick=()=>{S=fromTpl(id);save();syncForm();renderAll();if(id==='custom')$('#f-task').focus()};tplsEl.appendChild(b)});
+{const ad=document.getElementById('addDrive');if(ad)ad.addEventListener('click',()=>{if(!S.src.includes('drive')){S.src.push('drive');if(!S.folder)S.folder='التقارير';save();syncForm();renderAll()}})}
 const srcsEl=$('#srcs');Object.entries(SRC).forEach(([k,v])=>{const b=document.createElement('button');b.className='chipb multi';b.dataset.v=k;b.textContent=v.n;b.onclick=()=>{S.src=S.src.includes(k)?S.src.filter(x=>x!==k):[...S.src,k];save();syncForm();renderAll()};srcsEl.appendChild(b)});
 const outsEl=$('#outs');Object.entries(OUT).forEach(([k,v])=>{const b=document.createElement('button');b.className='chipb';b.dataset.v=k;b.textContent=v.n;b.onclick=()=>{S.out=k;save();syncForm();renderAll()};outsEl.appendChild(b)});
 $$('#when .chipb').forEach(b=>b.onclick=()=>{S.when=b.dataset.v;save();syncForm();renderAll()});
@@ -1066,7 +1075,10 @@ function syncForm(){
   $('#f-day').value=S.day;tSel.value=S.time;
   $('#dayWrap').hidden=S.when!=='weekly';$('#timeWrap').hidden=S.when==='demand';
   $('#whenHint').textContent=S.when==='demand'?'لن تحتاج مهمة مجدولة؛ ستستدعي الوكيل باسمه متى أردت.':'ابدأ بأقل تكرار يكفيك، وزده لاحقًا إن احتجت.';
-  $('#folderWrap').hidden=!S.src.includes('drive');
+  {const d=S.src.includes('drive'),ms=S.src.includes('ms');$('#folderWrap').hidden=!(d||ms);const where=d&&ms?'Drive أو OneDrive':d?'Drive':'OneDrive أو SharePoint';$('#folderWrap label').textContent='اسم المجلد في '+where;$('#folderWrap small').textContent='اكتبه حرفًا بحرف كما يظهر في '+where+'.';
+   const mn=$('#msNote');if(mn)mn.hidden=!ms;
+   const on=$('#outNote');if(on)on.hidden=!(S.out==='word'&&!d);
+   const tn=$('#taskNote');if(tn)tn.hidden=!/\[[^\]]+\]/.test(S.task||'');}
 }
 
 /* ---------- agent card + dependent text ---------- */
@@ -1076,13 +1088,13 @@ function renderCard(){
   $('#cSrc').innerHTML=S.src.length?srcNames().map(n=>`<i>${esc(n)}</i>`).join(''):'<span class="warnsrc">اختر مصدرًا واحدًا على الأقل</span>';
   $('#cOut').textContent=OUT[S.out].card;{const k=$('#cSkill');if(k)k.textContent=(S.task||'').trim()||'لم تصف المهمة بعد';}
   $('#cRules').textContent=rulesFull();
-  const cn=S.src.filter(k=>k!=='web').map(k=>SRC[k].n);($('#preSrc')||{}).textContent=cn.length?`ستربط: ${joinAr(cn)}. اربطها فقط، لا كل الموصلات. في Team وEnterprise يجب أن يتيحها مالك الحساب أولًا.`+(S.src.includes('web')?' والبحث في الويب لا يحتاج موصلًا.':''):S.src.includes('web')?'وكيلك يستخدم البحث في الويب فقط، ولا يحتاج موصلًا.':'اختر مصادر وكيلك في السؤال الثالث، وستظهر هنا.';
+  const cn=S.src.filter(k=>k!=='web').map(k=>cName(k));($('#preSrc')||{}).textContent=cn.length?`ستربط: ${joinAr(cn)}. اربطها فقط، لا كل الموصلات. في Team وEnterprise يجب أن يتيحها مالك الحساب أولًا.`+(S.src.includes('web')?' والبحث في الويب لا يحتاج موصلًا.':''):S.src.includes('web')?'وكيلك يستخدم البحث في الويب فقط، ولا يحتاج موصلًا.':'اختر مصادر وكيلك في السؤال الثالث، وستظهر هنا.';
   $('#tSkill').textContent=`في وكيلك: «${S.name}»، من Customize → Skills`;
   $('#tConn').textContent=S.src.length?`في وكيلك: ${joinAr(srcNames())}، من Customize → Connectors`:'في وكيلك: لم تختر مصدرًا بعد';
   $('#tSched').textContent=S.when==='demand'?'في وكيلك: لا يحتاجها، تستدعيه بالاسم':`في وكيلك: ${whenText()}، من Scheduled`;
   $('#tOut').textContent=`في وكيلك: ${OUT[S.out].card}`;
   $('#h-walk').textContent=`بناء «${S.name||'وكيلك'}» خطوة بخطوة`;renderFast();
-  const cn2=S.src.filter(k=>k!=='web').map(k=>SRC[k].n);$('#c1t').textContent=cn2.length?`ربطت موصلات وكيلي فقط: ${joinAr(cn2)}، وتأكّدت أنها مفعّلة داخل المهمة من زر +.`:'وكيلي لا يحتاج موصلًا، وتأكّدت أن البحث في الويب متاح.';
+  const cn2=S.src.filter(k=>k!=='web').map(k=>cName(k));$('#c1t').textContent=cn2.length?`ربطت موصلات وكيلي فقط: ${joinAr(cn2)}، وتأكّدت أنها مفعّلة داخل المهمة من زر +.`:'وكيلي لا يحتاج موصلًا، وتأكّدت أن البحث في الويب متاح.';
   $('#c6t').textContent=S.when==='demand'?'جرّبت استدعاءه باسمه، وأعرف متى أحتاجه.':'أنشأت المهمة المجدولة بالموافقة التلقائية، وسأراجع أول ثلاث مرات تشغيل في صفحة Scheduled.';
 }
 
@@ -1138,7 +1150,7 @@ function buildScenes(){
   const name=esc(S.name||'وكيلي');
   const conns=S.src.filter(k=>k!=='web');
   const FREQ={daily:'Daily',weekly:'Weekly · '+({'أحد':'Sunday','اثنين':'Monday','ثلاثاء':'Tuesday','أربعاء':'Wednesday','خميس':'Thursday','جمعة':'Friday','سبت':'Saturday'}[S.day]||'Sunday'),weekdays:'Weekdays'}[S.when]||'';
-  const rows=['gmail','drive','cal','slack','tasks'].map(k=>{const on=S.src.includes(k);const nm=k==='tasks'?'ClickUp / Asana / Notion':SRC[k].n;return `<div class="ui-row"><span>${nm}</span><span class="ui-btn ghost${on?' will':''}"${k===(conns[0]||'')?' id="tgt"':''}>Connect</span></div>`}).join('');
+  const rows=['gmail','drive','cal','ms','slack','tasks'].map(k=>{const on=S.src.includes(k);const nm=k==='tasks'?'Asana / Notion / monday.com':SRC[k].n;return `<div class="ui-row"><span>${nm}</span><span class="ui-btn ghost${on?' will':''}"${k===(conns[0]||'')?' id="tgt"':''}>Connect</span></div>`}).join('');
   const t=T[S.tpl], q=t.q;
   const outPreview=S.out==='word'?`<div class="filecard" id="tgt"><span class="ic"></span><div class="rtl"><b>${name}.docx</b><div class="note">يُحفظ في Drive</div></div></div>`
     :S.out==='drafts'?`<div class="outcard rtl" id="tgt"><b>3 مسودات بانتظار موافقتك</b><div class="ln" style="width:90%"></div><div class="ln" style="width:70%"></div></div>`
@@ -1146,7 +1158,7 @@ function buildScenes(){
   const sc=[
    {side:'settings',t:'فعّل إنشاء الملفات',c:'فعّل خيار Code execution and file creation (تشغيل الكود وإنشاء الملفات)؛ فالمهارات لا تعمل إلا به. في حسابات Team وEnterprise يفعّله مالك الحساب من <span dir="ltr">Organization settings → Capabilities</span>.',w:ltr('Settings → Capabilities'),
     h:`<div class="ui-row"><span>Code execution and file creation</span><span class="tog will" id="tgt"></span></div><div class="ui-row"><span>Memory</span><span class="tog on"></span></div>`,after:()=>{$$('#stage .tog.will').forEach(el=>setTimeout(()=>el.classList.add('on'),900))}},
-   {side:'customize',t:'اربط مصادر وكيلك',c:conns.length?`اضغط + بجانب Connectors، واختر ${joinAr(conns.map(k=>SRC[k].n))}، ثم Connect وسجّل الدخول. لا تربط غيرها، وتستطيع فصلها متى شئت. وفي كل مهمة تأكّد أنها مفعّلة من زر + أسفل مربع الكتابة ثم Connectors.`:'وكيلك لا يحتاج موصلًا. البحث في الويب متاح دون تفعيل: Claude يبحث حين يفيد ذلك.',w:ltr('Customize → Connectors → +'),
+   {side:'customize',t:'اربط مصادر وكيلك',c:conns.length?`اضغط + بجانب Connectors، واختر ${joinAr(conns.map(cName))}، ثم Connect وسجّل الدخول. لا تربط غيرها، وتستطيع فصلها متى شئت. وفي كل مهمة تأكّد أنها مفعّلة من زر + أسفل مربع الكتابة ثم Connectors.`:'وكيلك لا يحتاج موصلًا. البحث في الويب متاح دون تفعيل: Claude يبحث حين يفيد ذلك.',w:ltr('Customize → Connectors → +'),
     h:`<div class="ui-row"><b>Connectors</b><span class="ui-btn ghost">+</span></div>${rows}`,after:()=>{$$('#stage .ui-btn.will').forEach((el,j)=>setTimeout(()=>{el.textContent='Connected ✓';el.classList.remove('ghost')},900+j*400))}},
    {side:'new',copy:'1',t:'اطلب إنشاء المهارة',c:'المهارة ذاكرة وكيلك: فيها طريقتك وقواعده، فلا تعيد شرحها في كل تشغيل. ابدأ محادثة جديدة (أو مهمة جديدة في Cowork إن ظهر لك خياره)، والصق «الرسالة 1»، وتجد زر نسخها تحت هذه الخطوة، ثم أرسلها.',w:ltr('+ New'),
     h:`<div style="flex:1"></div><div class="input rtl"><span id="typer"></span><span class="caret"></span></div><div style="display:flex"><span class="ui-btn" id="tgt" aria-label="إرسال">↑</span></div>`,type:`أريد إنشاء مهارة اسمها «${S.name||'وكيلي'}». الهدف: ${(S.task||'').slice(0,90)}...`},
@@ -1171,7 +1183,7 @@ function go(k){i=(k+scenes.length)%scenes.length;const s=scenes[i];clearInterval
 
 function schedText(){const n=S.name||'وكيلي';return `/schedule جدول مهارة «${n}» لتعمل ${whenText()}، واستخدم الموصلات المرتبطة بها، ولا ترسل شيئًا لأحد دون موافقتي.`}
 function renderFast(){const L=$('#fastList');if(!L)return;const n=esc(S.name||'وكيلي');
-  const conns=S.src.filter(k=>k!=='web').map(k=>SRC[k].n);
+  const conns=S.src.filter(k=>k!=='web').map(cName);
   const items=[];
   if(conns.length)items.push({box:'c2',t:'اربط الموصلات',c:`<span class="path" dir="ltr">Customize → Connectors → +</span>اختر ${esc(joinAr(conns))}، ثم Connect وسجّل الدخول. تستطيع فصلها متى شئت.`});
   items.push({box:'c3',t:'احفظ المهارة',c:'ابدأ محادثة جديدة، والصق «الرسالة 1»، وأجب عن أسئلة Claude، ثم اضغط Save skill في البطاقة التي تظهر آخر المحادثة.',cp:'1'});
