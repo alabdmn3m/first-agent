@@ -257,8 +257,9 @@ section{display:flex;flex-direction:column;gap:22px;scroll-margin-top:72px}
 .list-acc details{border-bottom:1px solid var(--line)}
 .list-acc summary{cursor:pointer;list-style:none;padding:15px 2px;display:flex;gap:12px;align-items:center;font-weight:500}
 .list-acc summary::-webkit-details-marker{display:none}
-.list-acc summary::after{content:"+";margin-inline-start:auto;color:var(--faint);font-size:1.25rem;transition:transform .3s}
-.list-acc details[open] summary::after{transform:rotate(45deg)}
+.list-acc summary::after{content:"";margin-inline-start:auto;flex:none;width:8px;height:8px;border-right:2px solid var(--faint);border-bottom:2px solid var(--faint);transform:translateY(-3px) rotate(45deg);transition:transform .3s var(--ease)}
+.list-acc summary:hover::after{border-color:var(--brand)}
+.list-acc details[open] summary::after{transform:translateY(2px) rotate(-135deg)}
 .list-acc .q{width:26px;height:26px;border-radius:50%;background:var(--gold-soft);display:grid;place-items:center;font-size:.85rem;flex:none;box-shadow:inset 0 0 0 1px var(--gold)}
 .list-acc .ans{padding:0 2px 16px 40px;display:flex;flex-direction:column;gap:4px;font-size:.95rem;color:var(--muted)}
 .list-acc .ans b{color:var(--ink);font-weight:500}
@@ -934,7 +935,7 @@ body.hc.m-apply .assemble{margin-top:10px}
     <h2 id="h-fix">مشكلات شائعة وحلولها</h2>
   </div>
   <div class="list-acc">
-    <details><summary><span class="q">؟</span>لا أعرف ماذا أطلب من وكيلي</summary><div class="ans"><span><b>ابدأ من الألم:</b> ما المهمة التي تكررها كل أسبوع وتأخذ منك أكثر من 20 دقيقة؟ هذه أول وكيل لك. اختر أقرب نموذج إليها في قسم «حدّد وكيلك»، وعدّل وصفها.</span></div></details>
+    <details><summary><span class="q">؟</span>لا أعرف ماذا أطلب من وكيلي</summary><div class="ans"><span><b>ابدأ من الألم:</b> ما المهمة التي تكررها كل أسبوع وتأخذ منك أكثر من 20 دقيقة؟ هذه أول وكيل لك. اختر أقرب نموذج إليها في قسم «صف وكيلك»، وعدّل وصفها.</span></div></details>
     <details><summary><span class="q">؟</span>لا أجد قائمة Scheduled</summary><div class="ans"><span><b>السبب غالبًا:</b> اشتراكك مجاني، أو التطبيق قديم، أو أن مالك الحساب لم يُتح Cowork بعد في Team وEnterprise.</span><span><b>الحل:</b> تأكّد أن خطتك مدفوعة، وحدّث التطبيق أو افتح claude.ai، واطلب من مالك الحساب تفعيل Cowork. وفي التجربة الموحدة يمكنك أيضًا أن تصف المهمة وموعدها في أي محادثة، ثم تضغط Schedule.</span></div></details>
     <details><summary><span class="q">؟</span>لا يظهر زر حفظ المهارة</summary><div class="ans"><span><b>السبب غالبًا:</b> Claude لم ينهِ تجهيز المهارة بعد.</span><span><b>الحل:</b> تأكّد أن <span dir="ltr">Code execution and file creation</span> مفعّل من <span dir="ltr">Settings → Capabilities</span>، ثم اكتب له: «جهّز ملف المهارة الآن لأحفظه».</span></div></details>
     <details><summary><span class="q">؟</span>قال الوكيل: «لا أستطيع الوصول إلى المصدر»</summary><div class="ans"><span><b>السبب غالبًا:</b> موصل المصدر غير مفعّل، أو اسم المجلد أو القناة في المهارة لا يطابق الاسم الحقيقي.</span><span><b>الحل:</b> اربط الموصل من <span dir="ltr">Customize → Connectors</span>، وتأكّد أنه مفعّل في المهمة نفسها من زر + ثم Connectors، وانسخ الاسم حرفيًا إلى المهارة.</span></div></details>
@@ -1224,7 +1225,7 @@ const Q=[
 ];
 let qi=0,score=0;const qb=$('#quizBox');
 function drawQ(){
-  if(qi>=Q.length){qb.innerHTML=`<div class="qhead"><span class="eyebrow">النتيجة</span><div class="pips">${Q.map(()=>'<i class="ok"></i>').join('')}</div></div><p class="qt">${score} من ${Q.length}</p><p class="fb">${score===Q.length?'فهمت أجزاء الوكيل. انتقل إلى الشروط، ثم حدّد وكيلك.':'راجع قسم «الفكرة» ثم أعد المحاولة. الفكرة الأهم: ابنِ، جرّب، ثم جدول.'}</p><div><button class="btn" id="qr">أعد الاختبار</button></div>`;$('#qr').onclick=()=>{qi=0;score=0;drawQ()};return}
+  if(qi>=Q.length){qb.innerHTML=`<div class="qhead"><span class="eyebrow">النتيجة</span><div class="pips">${Q.map(()=>'<i class="ok"></i>').join('')}</div></div><p class="qt">${score} من ${Q.length}</p><p class="fb">${score===Q.length?'فهمت أجزاء الوكيل. انتقل إلى الشروط، ثم صف وكيلك.':'راجع قسم «الفكرة» ثم أعد المحاولة. الفكرة الأهم: ابنِ، جرّب، ثم جدول.'}</p><div><button class="btn" id="qr">أعد الاختبار</button></div>`;$('#qr').onclick=()=>{qi=0;score=0;drawQ()};return}
   const d=Q[qi];
   qb.innerHTML=`<div class="qhead"><span class="eyebrow">سؤال ${qi+1} من ${Q.length}</span><div class="pips">${Q.map((_,j)=>`<i class="${j<qi?'ok':j===qi?'on':''}"></i>`).join('')}</div></div><p class="qt">${d.q}</p><div class="opts">${d.o.map((o,j)=>`<button class="opt" data-j="${j}">${o}</button>`).join('')}</div><p class="fb" aria-live="polite"></p>`;
   qb.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{const j=+b.dataset.j,ok=j===d.a;if(ok)score++;qb.querySelectorAll('.opt').forEach((x,k)=>{x.disabled=true;if(k===d.a)x.classList.add('right')});if(!ok)b.classList.add('wrong');qb.querySelector('.fb').innerHTML=`<b>${ok?'صحيح.':'ليس تمامًا.'}</b> ${d.e}`;const nx=document.createElement('div');nx.innerHTML=`<button class="btn soft">${qi<Q.length-1?'السؤال التالي':'النتيجة'}</button>`;nx.firstChild.onclick=()=>{qi++;drawQ()};qb.appendChild(nx)});
