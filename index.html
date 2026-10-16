@@ -570,6 +570,12 @@ body.hc.m-apply .assemble{margin-top:10px}
 .excard{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--line);border-inline-start:3px solid var(--gold);background:var(--surface);border-radius:12px;padding:12px 14px;margin-top:-6px}
 .excard b{display:block;font-size:.95rem}.excard small{color:var(--muted);font-size:.9rem}
 .excard .pdot{flex:none;margin-top:7px}
+
+.st-intro{display:none}
+#app .st-intro{display:block;padding-bottom:12px;border-bottom:1px solid var(--line-soft);margin-bottom:2px}
+#app .st-intro b{display:inline-block;font-size:.82rem;color:var(--brand);background:var(--brand-soft);border-radius:20px;padding:2px 10px;margin-bottom:6px}
+#app .st-intro p{margin:0;color:var(--ink);font-size:1rem;line-height:1.7}
+#app .excard{margin-top:0}
 </style>
 
 <nav class="nav" aria-label="محطات الورشة"><div class="wrap">
@@ -606,8 +612,8 @@ body.hc.m-apply .assemble{margin-top:10px}
   <section class="scr" data-i="0" aria-label="هل تحتاجه؟">
     <h2>هل مهمتك تستحق وكيلًا؟</h2>
     <p class="lead"><b>الوكيل</b> مهمة تعلّمها Claude مرة واحدة، فيؤديها بطريقتك في موعدها أو متى طلبته، دون أن تعيد شرحها له.</p>
-    <div class="excard" aria-label="مثال"><span class="pdot"></span><div><b>مثال: التقرير الأسبوعي</b><small>يصلك كل أحد الساعة 7:45 صباحًا جاهزًا، وفيه 3 قرارات تنتظرك.</small></div></div>
     <div data-slot="selftest"></div>
+    <div class="excard" aria-label="مثال"><span class="pdot"></span><div><b>مثال لوكيل يستحق: التقرير الأسبوعي</b><small>يصلك كل أحد الساعة 7:45 صباحًا جاهزًا، وفيه 3 قرارات تنتظرك.</small></div></div>
     <div class="need card"><b>ما تحتاجه قبل البدء</b>
       <ul>
         <li>اشتراك Claude مدفوع: Pro أو Max.</li>
@@ -677,6 +683,7 @@ body.hc.m-apply .assemble{margin-top:10px}
   </div>
   <div class="card selftest" id="selftest">
     <b class="st-h">هل مهمتك تستحق وكيلًا؟ ثلاثة أسئلة</b>
+    <div class="st-intro"><b>اختبار سريع</b><p>فكّر في مهمة واحدة تكررها في عملك، مثل تقرير أو ملخص أو متابعة، ثم أجب عنها بثلاث نقرات.</p></div>
     <div class="st-q"><span>هل تتكرر كل أسبوع أو أكثر؟</span><span class="yn"><button type="button" data-v="1">نعم</button><button type="button" data-v="0">لا</button></span></div>
     <div class="st-q"><span>هل تأخذ منك أكثر من 20 دقيقة في كل مرة؟</span><span class="yn"><button type="button" data-v="1">نعم</button><button type="button" data-v="0">لا</button></span></div>
     <div class="st-q"><span>هل تستطيع شرح طريقتها لموظف جديد في سطرين؟</span><span class="yn"><button type="button" data-v="1">نعم</button><button type="button" data-v="0">لا</button></span></div>
