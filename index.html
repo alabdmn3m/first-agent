@@ -299,7 +299,7 @@ section{display:flex;flex-direction:column;gap:22px;scroll-margin-top:72px}
 footer{border-top:1px solid var(--line);padding-block:28px 40px}
 footer .wrap{display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap}
 footer svg{width:120px;height:auto}
-footer p{font-size:.9rem;color:var(--muted)}
+footer p{font-size:.9rem;color:var(--muted);text-wrap:balance}
 
 @media (max-width:760px){
   .hero,.idea,.walk,.build,.compare,.qsteps,.prereq{grid-template-columns:1fr}
@@ -324,7 +324,8 @@ footer p{font-size:.9rem;color:var(--muted)}
 .qrow:last-child{border-bottom:0}
 .qrow h3{font-family:var(--f-body);font-weight:500;font-size:1.06rem;display:flex;gap:10px;align-items:center}
 .qrow h3 .num{width:26px;height:26px;border-radius:50%;background:var(--brand);color:var(--brand-ink);display:grid;place-items:center;font-size:.86rem;flex:none}
-.tpls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+[hidden]{display:none!important}
+.tpls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
 .tpl{border:1px solid var(--line);background:var(--paper);border-radius:12px;padding:11px 12px;text-align:start;display:flex;gap:10px;align-items:flex-start;transition:all .25s var(--ease)}
 .tpl:hover{border-color:var(--brand)}
 .tpl[aria-pressed="true"]{border-color:var(--brand);background:var(--brand-soft);box-shadow:0 0 0 1px var(--brand)}
@@ -936,7 +937,7 @@ body.hc.m-apply .assemble{margin-top:10px}
     <details><summary><span class="q">؟</span>لا أجد قائمة Scheduled</summary><div class="ans"><span><b>السبب غالبًا:</b> اشتراكك مجاني، أو التطبيق قديم، أو أن مالك الحساب لم يُتح Cowork بعد في Team وEnterprise.</span><span><b>الحل:</b> تأكّد أن خطتك مدفوعة، وحدّث التطبيق أو افتح claude.ai، واطلب من مالك الحساب تفعيل Cowork. وفي التجربة الموحدة يمكنك أيضًا أن تصف المهمة وموعدها في أي محادثة، ثم تضغط Schedule.</span></div></details>
     <details><summary><span class="q">؟</span>لا يظهر زر حفظ المهارة</summary><div class="ans"><span><b>السبب غالبًا:</b> Claude لم ينهِ تجهيز المهارة بعد.</span><span><b>الحل:</b> تأكّد أن <span dir="ltr">Code execution and file creation</span> مفعّل من <span dir="ltr">Settings → Capabilities</span>، ثم اكتب له: «جهّز ملف المهارة الآن لأحفظه».</span></div></details>
     <details><summary><span class="q">؟</span>قال الوكيل: «لا أستطيع الوصول إلى المصدر»</summary><div class="ans"><span><b>السبب غالبًا:</b> موصل المصدر غير مفعّل، أو اسم المجلد أو القناة في المهارة لا يطابق الاسم الحقيقي.</span><span><b>الحل:</b> اربط الموصل من <span dir="ltr">Customize → Connectors</span>، وتأكّد أنه مفعّل في المهمة نفسها من زر + ثم Connectors، وانسخ الاسم حرفيًا إلى المهارة.</span></div></details>
-    <details><summary><span class="q">؟</span>المصدر الذي أريده غير موجود في الموصلات</summary><div class="ans"><span><b>الحل:</b> صدّر بياناته إلى Google Drive أو مجلد على حاسبك، واجعل الوكيل يقرأ منه. أو اطلب منه البحث في الويب إن كانت المعلومات منشورة.</span></div></details>
+    <details><summary><span class="q">؟</span>المصدر الذي أريده غير موجود في الموصلات</summary><div class="ans"><span><b>الحل:</b> ابحث أولًا باسم الأداة في دليل الموصلات داخل Claude، ففيه مئات الموصلات. إن لم تجدها فصدّر بياناتها دوريًا إلى Google Drive أو OneDrive، واجعل الوكيل يقرأ منه. ولا تعتمد على مجلد في حاسبك، فالمهمة المجدولة لا تصل إليه إلا والتطبيق مفتوح. وإن كانت المعلومات منشورة فاطلب منه البحث في الويب.</span></div></details>
     <details><summary><span class="q">؟</span>الناتج لم يعجبني</summary><div class="ans"><span><b>الحل:</b> لا تبدأ من الصفر. قل له بدقة ما الخطأ: «حدّث المهارة بحيث يكون الملخص 5 أسطر فقط، ويبدأ بما يحتاج قراري»، ثم احفظ المهارة المحدّثة؛ فلا يتكرر الخطأ.</span></div></details>
     <details><summary><span class="q">؟</span>لم يعمل الوكيل في موعده</summary><div class="ans"><span><b>السبب غالبًا:</b> المهمة متوقفة مؤقتًا، أو تنتظر موافقتك لأن الموافقة التلقائية غير مفعّلة أو لأن سياسة حسابك تشترط الموافقة على أداة، أو تحتاج ملفات على حاسبك وكان التطبيق مغلقًا. وإن تعذّر الوصول إلى Claude لحظتها، فإنه يعيد المحاولة بعد 5 ثم 15 ثم 30 دقيقة.</span><span><b>الحل:</b> افتح Scheduled وتحقّق من حالة المهمة وسجل تشغيلها، وفعّل الموافقة التلقائية، وشغّلها فورًا للتجربة.</span></div></details>
   </div>
@@ -1133,7 +1134,8 @@ let runT=null,runI=-1;const track=$('#track'),fill=$('#fill'),log=$('#log'),runB
 function runData(){
   const t0=S.when==='demand'?'الآن':S.time.replace(/^0/,'');
   const tt=n=>S.when==='demand'?'+'+n+(n===1?' دقيقة':n<11?' دقائق':' دقيقة'):addMin(S.time,n);
-  const L=T[S.tpl].log||[`قرأ ما جدّ في: ${S.src.length?joinAr(srcNames()):'المصادر التي حددتها'}.`,'طبّق المهارة: استخرج ما يخدم الهدف ورتّبه.',`أعدّ الناتج: ${OUT[S.out].card}.`];
+  const tp=T[S.tpl],same=tp.log&&tp.src&&tp.src.length===S.src.length&&tp.src.every(k=>S.src.includes(k))&&tp.out===S.out;
+  const L=same?tp.log:[`قرأ ما جدّ في: ${S.src.length?joinAr(srcNames()):'المصادر التي حددتها'}.`,'طبّق المهارة: استخرج ما يخدم الهدف ورتّبه.',`أعدّ الناتج: ${OUT[S.out].card}.`];
   return{steps:[['clock',S.when==='demand'?'تطلبه أنت':'الموعد يحين'],['read','يقرأ المصادر'],['skill','يطبّق المهارة'],['write','يُعدّ الناتج'],['send',{chat:'يصلك الملخص',word:'يحفظ الملف',table:'يصلك الجدول',drafts:'يجهّز المسودات'}[S.out]||'يصلك الناتج']],
    log:[[t0,`بدأ التشغيل: «${S.name||'وكيلي'}»، ${whenText()}.`],[tt(1),L[0]],[tt(3),L[1]],[tt(6),L[2]],[tt(7),`وصلك الناتج: ${OUT[S.out].card}، مع خلاصة من 5 أسطر. لم يُرسل شيء لأحد.`]]};
 }
