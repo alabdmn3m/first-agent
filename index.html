@@ -669,7 +669,7 @@ body.hc.m-apply .assemble{margin-top:10px}
  <figure class="week card" aria-label="أمثلة لوكلاء يعملون وحدهم">
   <figcaption>أمثلة لوكلاء يعملون وحدهم</figcaption>
   <ol class="days"><li class="on">أحد<i></i></li><li>اثنين<i></i></li><li>ثلاثاء<i></i></li><li>أربعاء<i></i></li><li class="g">خميس<i></i></li><li>جمعة</li><li>سبت</li></ol>
-  <div class="ping"><span class="pdot"></span><div><b>ملخص البريد الصباحي</b><small>يوميًا، 7:30 صباحًا، 5 رسائل تحتاج ردك</small></div></div>
+  <div class="ping"><span class="pdot"></span><div><b>ملخص البريد الصباحي</b><small>أيام العمل، 7:30 صباحًا، 5 رسائل تحتاج ردك</small></div></div>
   <div class="ping soft"><span class="pdot"></span><div><b>التقرير الأسبوعي</b><small>الأحد، 7:45 صباحًا، 3 قرارات تنتظرك</small></div></div>
   <div class="ping soft"><span class="pdot g"></span><div><b>رصد الفرص</b><small>الخميس، 8:00 صباحًا، 7 فرص جديدة</small></div></div>
  </figure>
@@ -1258,7 +1258,9 @@ function markDone(id,on=true){const a=$(`.nav a[href="#${id}"]`);if(a)a.classLis
   function step(){pings.forEach(p=>p.classList.remove('arrive'));days.forEach(d=>d.classList.remove('pulse'));
     const m=map[k%pings.length];pings[k%pings.length].classList.add('arrive');days[m.d]&&days[m.d].classList.add('pulse');
     $('#liveTxt').textContent=m.t;setTimeout(()=>{if($('#liveTxt').textContent===m.t)$('#liveTxt').textContent=m.t.replace('مثال يعمل الآن:','مثال اكتمل ✓').replace('…','')},1800);k++}
-  if(!RM){step();const iv=setInterval(()=>{if(k>=map.length){clearInterval(iv);pings.forEach(p=>p.classList.remove('arrive'));days.forEach(d=>d.classList.remove('pulse'));$('#liveTxt').textContent='أمثلة لوكلاء يعملون وحدهم';return}step()},3400)}else{$('#liveTxt').textContent='أمثلة لوكلاء يعملون وحدهم'}
+  const idle=()=>{pings.forEach(p=>p.classList.remove('arrive'));days.forEach(d=>d.classList.remove('pulse'));$('#liveTxt').textContent='أمثلة لوكلاء يعملون وحدهم'};
+  let iv=null;const play=()=>{if(iv||RM)return;step();iv=setInterval(step,3400)},pause=()=>{clearInterval(iv);iv=null;idle()};
+  if(RM||!('IntersectionObserver' in window)){idle();if(!RM)play()}else new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting?play():pause()),{threshold:.2}).observe(fig);
 })();
 
 /* 2. orbit explains itself */
